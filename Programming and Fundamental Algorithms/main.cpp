@@ -145,7 +145,6 @@ void InputNameAndAge() {
 	std::cout << "Hello, " << name << "! You are " << age << " years old." << std::endl;
 }
 
-
 // 2. Input 3 integers from 0 to 9 from the console.
 // Make sure the values are between 0 and 9. Do not permit the user to repeat the input values.
 // Let the user know if they are trying to repeat or inputting something that is out of bounds.
@@ -288,6 +287,56 @@ void BirthdayCovertor() {
 }
 
 
+// 1. The computer generates a random number automatically between 0 and 9. Use rand() % 10 to achieve this. Ask the user to guess the number. Let the user know whether they guessed correctly or not.
+// 2. Extend to keep on going until the number is guessed.Store the number of tries and output it at the end.
+// 3. Extend the guess a number game to any number between 0 ... 999, but now the computer suggests whether to go up or down after each input.
+void GuessNumber() {
+	// randomlize
+	std::srand(std::time(nullptr));
+
+	int number = rand() % 1000;
+	int guess = -1;
+	while (number != guess) {
+		std::cout << "Guess the Number(0-999)!" << std::endl;
+		std::cin >> guess;
+		if (guess < number) {
+			std::cout << "Too Low!" << std::endl;
+		} else if (guess > number) {
+			std::cout << "Too High!" << std::endl;
+		} else {
+			std::cout << "You Got It!" << std::endl;
+		}
+	}
+	return;
+}
+
+// Modify Guess Number Game to have the computer play against itself. What is a good set of choices to get the computer (guessing part) to choose? 
+void GuessNumberByPC() {
+	auto generateAnswer = [](int bottom, int top) { return bottom + (top - bottom) / 2; };
+
+	int top = 999;
+	int bottom = 0;
+	int number = rand() % 1000;
+	int guessNum = generateAnswer(bottom, top);
+	do {
+		std::cout << "Guess the Number(0-999)!" << std::endl;
+		int guessNum = generateAnswer(bottom, top);
+		if (guessNum < number) {
+			bottom = guessNum + 1;
+			std::cout << "PC guess: " << guessNum << ". Too Low!" << std::endl;
+		}
+		else if (guessNum > number) {
+			top = guessNum - 1;
+			std::cout << "PC guess: " << guessNum << ". Too High!" << std::endl;
+		}
+		else {
+			std::cout << "PC guess: " << guessNum << ". PC Got It!" << std::endl;
+			break;
+		}
+	} while (guessNum != number);
+}
+
+
 
 int main() {
 	//HelloWorld();
@@ -302,7 +351,8 @@ int main() {
 	//Check3InputIntegers();
 	//Quiz();
 	//SquaresFrom0to25();
-	BirthdayCovertor();
-
+	//BirthdayCovertor();
+	//GuessNumber();
+	GuessNumberByPC();
 ;	return 0;
 }
